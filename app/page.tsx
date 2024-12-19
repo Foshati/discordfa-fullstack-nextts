@@ -1,14 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-const state = true;
+import { UserProfile } from "./(auth)/_components/profile/user-profile";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export default function HomePage() {
   return (
     <div>
-      <Button className={cn("bg-slate-600", "text-lg", state && "bg-blue-500")}>
-        clicka
-      </Button>
+      <UserProfile />
+      <ModeToggle />
     </div>
   );
 }
