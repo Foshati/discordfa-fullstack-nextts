@@ -39,7 +39,7 @@ export default function UsernameInput({ control }: UsernameInputProps) {
     setUsernameStatus({ status: "checking", message: "" });
 
     try {
-      const response = await fetch(`/api/validate-username?username=${encodeURIComponent(username)}`);
+      const response = await fetch(`/api/auth/validate-username?username=${encodeURIComponent(username)}`);
       const data = await response.json();
 
       if (data.isUnique) {
@@ -65,7 +65,7 @@ export default function UsernameInput({ control }: UsernameInputProps) {
     setIsGenerating(true);
     try {
       const response = await fetch(
-        `/api/generate-usernames?baseName=${encodeURIComponent(baseName)}`
+        `/api/auth/generate-usernames?baseName=${encodeURIComponent(baseName)}`
       );
       const data = await response.json();
 
