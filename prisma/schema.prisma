@@ -10,15 +10,17 @@ datasource db {
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
-  name          String?
+  name          String
   emailVerified Boolean
-  image         String?
+  imageUrl      String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  deletedAt     DateTime?
 
-  role       String?
+  sessions Session[]
+  accounts Account[]
+
+  role       UserRole  @default(USER)
   banned     Boolean?
   banReason  String?
   banExpires DateTime?
@@ -27,7 +29,14 @@ model User {
   username String?
 
   @@unique([username])
+  @@index([email])
   @@map("user")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  MODERATOR
 }
 
 model Session {
@@ -38,9 +47,10 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  token     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  token     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   impersonatedBy String?
 
@@ -48,7 +58,7 @@ model Session {
 }
 
 model Account {
-  id                    String    @id @default(cuid())
+  id                    String    @id @default(uuid())
   accountId             String
   providerId            String
   userId                String
@@ -63,6 +73,7 @@ model Account {
   scope                 String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
 
   @@map("account")
 }
@@ -79,18 +90,21 @@ model Verification {
 }
 
 model Profile {
-  id       String @id @default(uuid())
-  userId   String
+  id       String  @id @default(uuid())
+  userId   String  @unique
   name     String
-  imageUrl String @db.Text
-  email    String @db.Text
+  imageUrl String? @db.Text
+  email    String  @unique @db.Text
+  userName String? @unique
 
   server Server[]
   member Member[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Channel   Channel[]
+  deletedAt DateTime?
+
+  Channel Channel[]
 }
 
 model Server {
@@ -126,8 +140,9 @@ model Member {
   serverId String
   Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([profileId])
   @@index([serverId])
@@ -150,8 +165,9 @@ model Channel {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([profileId])
   @@index([serverId])
