@@ -3,7 +3,6 @@ import { Auth } from "@/app/(auth)/_lib/helper/auth";
 
 const f = createUploadthing();
 
-// const auth = (req: Request) => ({ id: "fakeId" }); // Fake auth function
 
 const handleAuth = () => {
   const userId = Auth();

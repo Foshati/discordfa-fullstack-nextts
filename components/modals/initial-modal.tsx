@@ -60,47 +60,42 @@ export const InitialModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div>
-
-              <FormField
-              control={form.control}
-              name="imageUrl"
-              
-              render={({field})=>(
-                <FormItem>
-                  <FormControl>
-                    <FileUplaod endpoint="serverImage" value={field.value}  onChange={field.onChange}/>
-                  </FormControl>
-                </FormItem>
-              )}
-              
-              
-              />
-
-
-
-       
-
+              <div className="flex justify-center">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel> name server</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="server name"
-                          disabled={isLoading}
-                          {...field}
+                        <FileUplaod
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
                         />
                       </FormControl>
-
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
+              </div>
 
-       
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="mt-4"
+                        placeholder="server name"
+                        disabled={isLoading}
+                        {...field}
+                      />
+                    </FormControl>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <Button type="submit">Submit</Button>
           </form>
