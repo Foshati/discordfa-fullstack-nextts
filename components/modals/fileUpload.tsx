@@ -39,15 +39,21 @@ export const FileUplaod = ({ onChange, value, endpoint }: FileUploadProps) => {
 
   return (
     <div>
-      <UploadDropzone
-        endpoint={endpoint}
-        onClientUploadComplete={(res) => {
-          onChange(res?.[0].url);
-        }}
-        onUploadError={(error: Error) => {
-          alert(`ERROR! ${error.message}`);
-        }}
-      />
+ <UploadDropzone 
+  endpoint={endpoint}
+  onClientUploadComplete={(res) => {
+    onChange(res?.[0].url);
+  }}
+  onUploadError={(error: Error) => {
+    alert(`ERROR! ${error.message}`);
+  }}
+  appearance={{
+    button: {
+      backgroundColor: "#F97316",
+    }
+    
+  }}
+/>
     </div>
   );
 };

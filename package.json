@@ -22,6 +22,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "@types/nodemailer": "^6.4.17",
     "@uploadthing/react": "^7.1.3",
+    "axios": "^1.7.9",
     "better-auth": "^1.0.22",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -35,12 +36,14 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.4.1",
+    "uuid": "^11.0.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "9.17.0",
     "eslint-config-next": "15.1.1",
     "postcss": "^8",

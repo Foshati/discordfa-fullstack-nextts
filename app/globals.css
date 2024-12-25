@@ -87,3 +87,7 @@ html,body,:root{
     @apply bg-background text-foreground;
   }
 }
+
+.ut-upload-button {
+  background-color: orange !important;
+}
