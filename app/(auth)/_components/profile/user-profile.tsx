@@ -39,7 +39,7 @@ export const UserProfile = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="rounded-full p-0 focus:ring-2">
-              <Avatar className="w-8 h-8">
+              <Avatar className="w-10 h-10">
                 <AvatarImage
                   src={user?.image || undefined}
                   alt={user?.name || "User Profile"}

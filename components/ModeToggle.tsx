@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
@@ -30,7 +30,12 @@ export function ModeToggle() {
   }
 
   return (
-    <Button variant="ghost" size="icon" className="rounded-full" onClick={toggleTheme}>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="rounded-full text-slate-700 dark:text-slate-200  hover:bg-transparent "
+      onClick={toggleTheme}
+    >
       {theme === "light" ? (
         <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
       ) : (
