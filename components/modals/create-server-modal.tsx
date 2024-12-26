@@ -1,45 +1,41 @@
+// components/modals/create-server-modal.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/use-modal-store";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogFooter,
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { FileUploadThing } from "./FileUploadThing";
-import { useModal } from "@/hooks/use-modal-store";
+import { on } from "events";
 
 const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Server name is required.",
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required.",
-  }),
+  name: z.string().min(1, { message: "Server name is required." }),
+  imageUrl: z.string().min(1, { message: "Server image is required." }),
 });
 
 export const CreateServerModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const { isOpen, onClose, type } = useModal();
   const router = useRouter();
-
   const isModalOpen = isOpen && type === "createServer";
 
   const form = useForm({
@@ -50,14 +46,6 @@ export const CreateServerModal = () => {
     },
   });
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
-
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -67,7 +55,7 @@ export const CreateServerModal = () => {
       router.refresh();
       onClose();
     } catch (error) {
-      console.error("api server error:", error);
+      console.error("API server error:", error);
     }
   };
 
@@ -78,18 +66,19 @@ export const CreateServerModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="flex flex-col items-center text-center">
-        <DialogHeader>
-          <DialogTitle>Customize your server</DialogTitle>
-          <DialogDescription className="text-zinc-500 text-sm font-light">
-            Give your server a personality with a name and an image, you can
-            always change it later
+      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+        <DialogHeader className="pt-8 px-6">
+          <DialogTitle className="text-2xl text-center font-bold">
+            Customize your server
+          </DialogTitle>
+          <DialogDescription className="text-center text-zinc-500">
+            Give your server a personality with a name and an image. You can always change it later.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div>
-              <div className="flex justify-center">
+            <div className="space-y-8 px-6">
+              <div className="flex items-center justify-center text-center">
                 <FormField
                   control={form.control}
                   name="imageUrl"
@@ -102,6 +91,7 @@ export const CreateServerModal = () => {
                           onChange={field.onChange}
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -114,9 +104,9 @@ export const CreateServerModal = () => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        className="mt-4"
-                        placeholder="server name"
                         disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter server name"
                         {...field}
                       />
                     </FormControl>
@@ -125,9 +115,11 @@ export const CreateServerModal = () => {
                 )}
               />
             </div>
-            <Button className="w-full" type="submit" disabled={isLoading}>
-              Create
-            </Button>
+            <div className="px-6 py-4">
+              <Button  disabled={isLoading} className="w-full">
+                Create Server
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

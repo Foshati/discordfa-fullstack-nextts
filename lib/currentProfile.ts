@@ -1,4 +1,4 @@
-import { Auth } from "@/app/(auth)/_lib/helper/auth";
+import { Auth } from "@/app/(auth)/_lib/helper/Auth";
 import db from "./db";
 
 export const CurrentProfile = async () => {

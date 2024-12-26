@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
-
 import { cn } from "@/lib/utils";
 import { ActionTooltip } from "./action-tooltip";
 
@@ -19,26 +18,36 @@ export const NavigationItem = ({ id, name, imageUrl }: NavigationItemProps) => {
   const onClick = () => {
     router.push(`/servers/${id}`);
   };
+
   return (
-    <ActionTooltip label={name} side="right" align="center">
-      <button onClick={onClick} className="group flex items-center relative">
+    <ActionTooltip label={name} side="right" align="center" className="ml-2">
+      <button 
+        onClick={onClick} 
+        className="relative flex items-center group w-full "
+      >
         <div
           className={cn(
-            "absolute left-0 transition-all w-[4px] rounded-r-full bg-orange-500 ",
-            params?.serverId !== id && "group-hover:h-[20px]",
-            params?.serverId === id ? "h-[36px]" : "h-[8px]"
+            "absolute left-0 bg-orange-500 rounded-r-full transition-all ",
+            "w-1 group-hover:h-5",
+            params?.serverId === id ? "h-9" : "h-2"
           )}
         />
         <div
           className={cn(
-            "relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden duration-75",
-            params?.serverId === id &&
-              "bg-primary/10 text-primary rounded-[16px]"
+            "relative flex mx-3 h-12 w-12 group-hover:rounded-2xl",
+            "transition-all  overflow-hidden",
+            "rounded",
+            params?.serverId === id && "rounded-2xl bg-primary/10"
           )}
-        />
-
-
-        <Image src={imageUrl} alt={name} fill />
+        >
+          <Image
+            src={imageUrl}
+            alt={name}
+            fill
+            className="object-cover "
+            
+          />
+        </div>
       </button>
     </ActionTooltip>
   );

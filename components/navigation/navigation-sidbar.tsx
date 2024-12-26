@@ -1,3 +1,5 @@
+// NavigationSidebar.tsx
+
 import { CurrentProfile } from "@/lib/currentProfile";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -8,11 +10,13 @@ import { NavigationItem } from "./navigation-item";
 import { ModeToggle } from "../darkMode/ModeToggle";
 import { UserProfile } from "@/app/(auth)/_components/profile/user-profile";
 
-export const NavigationSidbar = async () => {
+export const NavigationSidebar = async () => {
   const profile = await CurrentProfile();
+  
   if (!profile) {
     return redirect("/login");
   }
+
   const servers = await db.server.findMany({
     where: {
       member: {
@@ -22,25 +26,27 @@ export const NavigationSidbar = async () => {
       },
     },
   });
+
   return (
-    <div className="space-y-4 flex flex-col items-center h-full  text-primary w-full dark:bg-[#1e1f22] bg-[#f2f3f5]  py-3 ">
-      <NavigationAction />
-      <Separator className="h-[3px] bg-zinc-300  dark:bg-zinc-700 rounded-md w-10 mx-auto" />
-      <ScrollArea className="flex-1 w-full">
-        {servers.map((server) => (
-          <div key={server.id} className="mb-4">
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
+    <div className="flex flex-col h-full w-[72px] py-3 dark:bg-[#1e1f22] bg-[#f2f3f5]">
+      <div className="flex-1 flex flex-col items-center space-y-4">
+        <NavigationAction />
+        <Separator className="h-[2px] w-10 mx-auto bg-zinc-300 dark:bg-zinc-700 rounded-full" />
+        <ScrollArea className="flex-1 w-full">
+          <div className="flex flex-col items-center space-y-2 px-1">
+            {servers.map((server) => (
+              <NavigationItem
+                key={server.id}
+                id={server.id}
+                name={server.name}
+                imageUrl={server.imageUrl}
+              />
+            ))}
           </div>
-        ))}
-      </ScrollArea>
-      <div className="pb-3 flex items-center flex-col">
-        <span className="mb-3">
-          <ModeToggle />
-        </span>
+        </ScrollArea>
+      </div>
+      <div className="flex flex-col items-center space-y-4 mt-auto pb-3">
+        <ModeToggle />
         <UserProfile />
       </div>
     </div>
