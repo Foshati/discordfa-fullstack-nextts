@@ -9,7 +9,7 @@ interface FileUploadProps {
   endpoint: "messageFile" | "serverImage";
 }
 
-export const FileUplaod = ({ onChange, value, endpoint }: FileUploadProps) => {
+export const FileUploadThing = ({ onChange, value, endpoint }: FileUploadProps) => {
   const fileType = value?.split(".").pop();
 
   if (value && fileType !== "pdf") {

@@ -5,7 +5,7 @@ import { NavigationAction } from "./navigation-action";
 import { Separator } from "@radix-ui/react-separator";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { NavigationItem } from "./navigation-item";
-import { ModeToggle } from "../ModeToggle";
+import { ModeToggle } from "../darkMode/ModeToggle";
 import { UserProfile } from "@/app/(auth)/_components/profile/user-profile";
 
 export const NavigationSidbar = async () => {

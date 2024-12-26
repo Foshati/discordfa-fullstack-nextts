@@ -16,7 +16,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
@@ -24,6 +23,7 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FileUploadThing } from "./FileUploadThing";
+import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -34,10 +34,11 @@ const formSchema = z.object({
   }),
 });
 
-export const InitialModal = () => {
-  const router = useRouter()
+export const CreateServerModal = () => {
+  const { isOpen, onClose, type } = useModal();
+  const router = useRouter();
 
-
+  const isModalOpen = isOpen && type === "createServer";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -56,15 +57,18 @@ export const InitialModal = () => {
       await axios.post("/api/servers", values);
       form.reset();
       router.refresh();
-      window.location.reload()
-
+      onClose();
     } catch (error) {
       console.error("api server error:", error);
     }
   };
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   return (
-    <Dialog open>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="flex flex-col items-center text-center">
         <DialogHeader>
           <DialogTitle>Customize your server</DialogTitle>

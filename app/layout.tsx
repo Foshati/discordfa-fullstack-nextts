@@ -1,9 +1,11 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Lexend } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const font = Lexend({
   subsets: ["latin"],
@@ -30,6 +32,7 @@ export default function GlobalLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ModalProvider/>
           {children}
           <Toaster />
         </ThemeProvider>
