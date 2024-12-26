@@ -7,6 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  user
+  admin
+  moderator
+}
+
+
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
@@ -20,7 +27,7 @@ model User {
   sessions Session[]
   accounts Account[]
 
-  role       UserRole  @default(USER)
+  role       UserRole  @default(user)
   banned     Boolean?
   banReason  String?
   banExpires DateTime?
@@ -33,11 +40,6 @@ model User {
   @@map("user")
 }
 
-enum UserRole {
-  USER
-  ADMIN
-  MODERATOR
-}
 
 model Session {
   id        String   @id @default(uuid())

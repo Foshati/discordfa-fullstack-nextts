@@ -32,7 +32,6 @@ export default function GlobalLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ModalProvider/>
           {children}
           <Toaster />
         </ThemeProvider>

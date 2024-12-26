@@ -40,10 +40,10 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (isAdminRoute && session.user.role !== "ADMIN") {
+  if (isAdminRoute && session.user.role !== "admin") {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (isUserRoute && session.user.role !== "USER") {
+  if (isUserRoute && session.user.role !== "user") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

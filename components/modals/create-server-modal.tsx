@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Dialog,
@@ -35,6 +36,7 @@ const formSchema = z.object({
 });
 
 export const CreateServerModal = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const { isOpen, onClose, type } = useModal();
   const router = useRouter();
 
@@ -48,11 +50,17 @@ export const CreateServerModal = () => {
     },
   });
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log(values);
-
     try {
       await axios.post("/api/servers", values);
       form.reset();
@@ -62,6 +70,7 @@ export const CreateServerModal = () => {
       console.error("api server error:", error);
     }
   };
+
   const handleClose = () => {
     form.reset();
     onClose();
@@ -111,14 +120,13 @@ export const CreateServerModal = () => {
                         {...field}
                       />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <Button className="w-full " type="submit">
-              create
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              Create
             </Button>
           </form>
         </Form>
