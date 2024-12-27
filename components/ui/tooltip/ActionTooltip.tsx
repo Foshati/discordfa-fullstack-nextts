@@ -16,7 +16,7 @@ interface ActionTooltipProps {
   kbd?: string;
 }
 
-export const ActionTooltip = ({
+const ActionTooltip = ({
   label,
   children,
   side,
@@ -53,3 +53,5 @@ export const ActionTooltip = ({
     </TooltipProvider>
   );
 };
+
+export default ActionTooltip;

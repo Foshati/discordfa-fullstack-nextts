@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ActionTooltip } from "./action-tooltip";
+import ActionTooltip from "../ui/tooltip/ActionTooltip";
 
 interface NavigationItemProps {
   id: string;
@@ -21,8 +21,8 @@ export const NavigationItem = ({ id, name, imageUrl }: NavigationItemProps) => {
 
   return (
     <ActionTooltip label={name} side="right" align="center" className="ml-2">
-      <button 
-        onClick={onClick} 
+      <button
+        onClick={onClick}
         className="relative flex items-center group w-full "
       >
         <div
@@ -40,13 +40,7 @@ export const NavigationItem = ({ id, name, imageUrl }: NavigationItemProps) => {
             params?.serverId === id && "rounded-2xl bg-primary/10"
           )}
         >
-          <Image
-            src={imageUrl}
-            alt={name}
-            fill
-            className="object-cover "
-            
-          />
+          <Image src={imageUrl} alt={name} fill className="object-cover " />
         </div>
       </button>
     </ActionTooltip>
