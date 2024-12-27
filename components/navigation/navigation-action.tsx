@@ -2,13 +2,13 @@
 
 import { Plus } from "lucide-react";
 import { useModal } from "@/store/use-modal-store";
-import ActionTooltip from "../ui/tooltip/ActionTooltip";
+import TooltipAction from "../ui/tooltipAction";
 
 export const NavigationAction = () => {
   const { onOpen } = useModal();
 
   return (
-    <ActionTooltip
+    <TooltipAction
       side="right"
       align="center"
       label="Create Server"
@@ -29,6 +29,6 @@ export const NavigationAction = () => {
           />
         </div>
       </button>
-    </ActionTooltip>
+    </TooltipAction>
   );
 };

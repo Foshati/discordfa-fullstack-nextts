@@ -1,8 +1,6 @@
 import { CurrentProfile } from "@/lib/currentProfile";
 import db from "@/lib/db";
 import { ChannelType } from "@prisma/client";
-import { role } from "better-auth/plugins/access";
-import { channel } from "diagnostics_channel";
 import { redirect } from "next/navigation";
 
 interface ServerSidebarProps {

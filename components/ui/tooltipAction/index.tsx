@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-interface ActionTooltipProps {
+interface TooltipActionProps {
   label: string;
   side: "left" | "right" | "top" | "bottom";
   align: "start" | "center" | "end";
@@ -16,14 +16,14 @@ interface ActionTooltipProps {
   kbd?: string;
 }
 
-const ActionTooltip = ({
+const TooltipAction = ({
   label,
   children,
   side,
   align,
   className,
   kbd,
-}: ActionTooltipProps) => {
+}: TooltipActionProps) => {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={50}>
@@ -54,4 +54,4 @@ const ActionTooltip = ({
   );
 };
 
-export default ActionTooltip;
+export default TooltipAction;
