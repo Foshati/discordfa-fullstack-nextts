@@ -1,13 +1,11 @@
 // components/modals/create-server-modal.tsx
 "use client";
 
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
+import { useModal } from "@/store/use-modal-store";
 
 import {
   Dialog,
@@ -26,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUploadThing } from "./FileUploadThing";
-import { on } from "events";
+import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Server name is required." }),
@@ -72,7 +70,8 @@ export const CreateServerModal = () => {
             Customize your server
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Give your server a personality with a name and an image. You can always change it later.
+            Give your server a personality with a name and an image. You can
+            always change it later.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -116,7 +115,7 @@ export const CreateServerModal = () => {
               />
             </div>
             <div className="px-6 py-4">
-              <Button  disabled={isLoading} className="w-full">
+              <Button disabled={isLoading} className="w-full">
                 Create Server
               </Button>
             </div>

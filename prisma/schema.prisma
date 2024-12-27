@@ -13,7 +13,6 @@ enum UserRole {
   moderator
 }
 
-
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
@@ -39,7 +38,6 @@ model User {
   @@index([email])
   @@map("user")
 }
-
 
 model Session {
   id        String   @id @default(uuid())
@@ -99,14 +97,13 @@ model Profile {
   email    String  @unique @db.Text
   userName String? @unique
 
-  server Server[]
-  member Member[]
+  servers  Server[]
+  members  Member[]
+  channels Channel[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-
-  Channel Channel[]
 }
 
 model Server {
@@ -118,10 +115,11 @@ model Server {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  member    Member[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Channel   Channel[]
+  members  Member[]
+  channels Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([profileId])
 }
@@ -137,10 +135,10 @@ model Member {
   role MemberRole @default(GUEST)
 
   profileId String
-  Profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
-  Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

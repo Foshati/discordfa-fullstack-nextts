@@ -1,4 +1,5 @@
 import { redirectToSignIn } from "@/app/(auth)/_lib/helper/redirectToSignIn";
+import { ServerSidebar } from "@/components/server/server-sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { CurrentProfile } from "@/lib/currentProfile";
 import db from "@/lib/db";
@@ -12,7 +13,7 @@ interface ServerIdLayoutProps {
 
 const ServerIdLayout = async ({ children, params }: ServerIdLayoutProps) => {
   const profile = await CurrentProfile();
-  const resolvedParams = await params;
+  const getParams = await params;
 
   if (!profile) {
     return redirectToSignIn();
@@ -20,8 +21,8 @@ const ServerIdLayout = async ({ children, params }: ServerIdLayoutProps) => {
 
   const server = await db.server.findUnique({
     where: {
-      id: resolvedParams.serverId,
-      member: {
+      id: getParams.serverId,
+      members: {
         some: {
           profileId: profile.id,
         },
@@ -37,7 +38,7 @@ const ServerIdLayout = async ({ children, params }: ServerIdLayoutProps) => {
     <Suspense fallback={<Spinner />}>
       <div className="h-full">
         <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
-          secondary sidebar
+          <ServerSidebar  serverId={getParams.serverId}/>
         </div>
       </div>
       <main className="h-full md:pl-60">{children}</main>

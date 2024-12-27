@@ -8,7 +8,7 @@ const SetupPage = async () => {
 
   const server = await db.server.findFirst({
     where: {
-      member: {
+      members: {
         some: {
           profileId: profile?.id,
         },
