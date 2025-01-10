@@ -6,129 +6,52 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import {
-  Cloud,
   CreditCard,
-  Github,
   Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
   Settings,
   User,
-  UserPlus,
-  UserPlusIcon,
-  Users,
 } from "lucide-react";
-import { Button, DropdownMenuShortcut } from "../ui";
-
-import { Server, MemberRole } from "@prisma/client";
+import { Button } from "../ui";
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
   role?: MemberRole;
 }
 
-export function ServerHeader({ server, role } :ServerHeaderProps) {
+export function ServerHeader({ server, role }: ServerHeaderProps) {
   const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
-
-
   return (
-    <DropdownMenu>
+    <DropdownMenu >
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{server.name}</Button>
+        <Button className="rounded-sm mx-2" variant="outline">{server.name}</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent className="w-56 bg-white dark:bg-[#1E1F22] rounded-sm shadow-lg p-2 m-1">
+        <DropdownMenuLabel className="px-2 py-1.5 text-sm font-semibold text-gray-900 dark:text-gray-100">My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator className="border-t border-gray-200 dark:border-gray-700" />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User />
+          <DropdownMenuItem className="flex items-center px-2 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <User className="w-4 h-4 mr-2" />
             <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard />
+          <DropdownMenuItem className="flex items-center px-2 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <CreditCard className="w-4 h-4 mr-2" />
             <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
+          <DropdownMenuItem className="flex items-center px-2 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Settings className="w-4 h-4 mr-2" />
             <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Keyboard />
+          <DropdownMenuItem className="flex items-center px-2 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Keyboard className="w-4 h-4 mr-2" />
             <span>Keyboard shortcuts</span>
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Users />
-            <span>Team</span>
-          </DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <UserPlus />
-              <span>Invite users</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <Mail />
-                  <span>Email</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <MessageSquare />
-                  <span>Message</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PlusCircle />
-                  <span>More...</span>
-                </DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            <Plus />
-            <span>New Team</span>
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Github />
-          <span>GitHub</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LifeBuoy />
-          <span>Support</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem disabled>
-          <Cloud />
-          <span>API</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
