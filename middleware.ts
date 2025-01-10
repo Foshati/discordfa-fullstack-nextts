@@ -8,7 +8,6 @@ const adminRoutes = ["/admin"];
 const userRoutes = ["/dashboard"];
 const publicRoutes = [""];
 
-
 export default async function authMiddleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
   const isAuthRoute = authRoutes.includes(pathName);
@@ -16,7 +15,6 @@ export default async function authMiddleware(request: NextRequest) {
   const isAdminRoute = adminRoutes.includes(pathName);
   const isUserRoute = userRoutes.includes(pathName);
   const isPublicRoute = publicRoutes.includes(pathName);
-
 
   const { data: session } = await betterFetch<Session>(
     "/api/auth/get-session",
@@ -26,7 +24,7 @@ export default async function authMiddleware(request: NextRequest) {
         //get the cookie from the request
         cookie: request.headers.get("cookie") || "",
       },
-    },
+    }
   );
 
   if (!session) {
@@ -51,10 +49,9 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };

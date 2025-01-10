@@ -27,6 +27,9 @@ export default function UsernameInput({ control }: UsernameInputProps) {
   const [suggestedUsernames, setSuggestedUsernames] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Watch the username field value
+  const usernameValue = useWatch({ control, name: "username" });
+
   // Watch the name field value
   const name = useWatch({ control, name: "name" });
 
@@ -39,7 +42,9 @@ export default function UsernameInput({ control }: UsernameInputProps) {
     setUsernameStatus({ status: "checking", message: "" });
 
     try {
-      const response = await fetch(`/api/auth/validate-username?username=${encodeURIComponent(username)}`);
+      const response = await fetch(
+        `/api/auth/validate-username?username=${encodeURIComponent(username)}`
+      );
       const data = await response.json();
 
       if (data.isUnique) {
@@ -77,15 +82,16 @@ export default function UsernameInput({ control }: UsernameInputProps) {
     }
   };
 
+  // Validate username whenever usernameValue changes
+  useEffect(() => {
+    validateUsername(usernameValue);
+  }, [usernameValue]);
+
   return (
     <Controller
       control={control}
       name="username"
       render={({ field }) => {
-        useEffect(() => {
-          validateUsername(field.value);
-        }, [field.value]);
-
         const hasValue = field.value && field.value.trim() !== "";
         const error = control._formState.errors.username;
         const isFullyValid = usernameStatus.status === "unique" && !error;
@@ -100,15 +106,21 @@ export default function UsernameInput({ control }: UsernameInputProps) {
                   {...field}
                   variant={!hasValue ? "default" : error ? "error" : "success"}
                   className={`pr-10 
-                    ${isFullyValid ? 'border-green-500' : ''}
-                    ${usernameStatus.status === "duplicate" ? 'border-red-500' : ''}
-                    ${usernameStatus.status === "checking" ? 'border-yellow-500' : ''}
+                    ${isFullyValid ? "border-green-500" : ""}
+                    ${
+                      usernameStatus.status === "duplicate"
+                        ? "border-red-500"
+                        : ""
+                    }
+                    ${
+                      usernameStatus.status === "checking"
+                        ? "border-yellow-500"
+                        : ""
+                    }
                   `}
                   onChange={(e) => {
                     const value = e.target.value;
-                    field.onChange(
-                      value.startsWith("@") ? value : `@${value}`
-                    );
+                    field.onChange(value.startsWith("@") ? value : `@${value}`);
                   }}
                 />
                 <button
@@ -132,9 +144,9 @@ export default function UsernameInput({ control }: UsernameInputProps) {
                   <X className="absolute right-2 text-red-500" size={20} />
                 )}
                 {usernameStatus.status === "checking" && (
-                  <LoaderCircle 
-                    className="absolute right-2 text-yellow-500 animate-spin" 
-                    size={20} 
+                  <LoaderCircle
+                    className="absolute right-2 text-yellow-500 animate-spin"
+                    size={20}
                   />
                 )}
               </div>

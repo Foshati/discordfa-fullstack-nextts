@@ -1,7 +1,4 @@
-import { headers } from "next/headers";
-import { auth } from "@/app/(auth)/_lib/auth";
 import { Fingerprint, User, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/app/(auth)/_components/ui
 import Link from "next/link";
 import SignoutButton from "../button/signout-button";
 import { currentUser } from "@/app/(auth)/_lib/helper/currentUser";
+import { Button } from "@/components/ui";
 
 export const UserProfile = async () => {
   const user = await currentUser();
@@ -39,7 +37,7 @@ export const UserProfile = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="rounded-full p-0 focus:ring-2">
-              <Avatar className="w-10 h-10">
+              <Avatar className="w-8 h-8">
                 <AvatarImage
                   src={user?.image || undefined}
                   alt={user?.name || "User Profile"}

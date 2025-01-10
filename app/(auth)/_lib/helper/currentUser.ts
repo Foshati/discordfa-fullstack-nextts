@@ -36,3 +36,27 @@ export const currentUser = cache(async (): Promise<User | null> => {
     return null;
   }
 });
+
+// Helper function to check if user has specific role
+export const hasRole = async (role: string): Promise<boolean> => {
+  const user = await currentUser();
+  return user?.role === role;
+};
+
+// Helper function to check if user is premium
+export const isPremium = async (): Promise<boolean> => {
+  const user = await currentUser();
+  return !!user?.premium;
+};
+
+// Helper function to check if user is banned
+export const isBanned = async (): Promise<boolean> => {
+  const user = await currentUser();
+  if (!user?.banned) return false;
+  
+  // Check if ban has expired
+  if (user.banExpires && new Date(user.banExpires) < new Date()) {
+    return false;
+  }
+  return true;
+};

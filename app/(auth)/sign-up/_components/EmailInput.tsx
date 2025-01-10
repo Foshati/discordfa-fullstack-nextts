@@ -1,6 +1,6 @@
 import { Check, LoaderCircle, X } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Input } from '@/app/(auth)/_components/input/auth-input';
@@ -50,15 +50,22 @@ export default function EmailInput({ control }: EmailInputProps) {
     }
   }, []);
 
+  const emailValue = useWatch({
+    control,
+    name: "email",
+  });
+
+  useEffect(() => {
+    if (emailValue) {
+      validateEmail(emailValue);
+    }
+  }, [emailValue, validateEmail]);
+
   return (
     <Controller
       control={control}
       name="email"
       render={({ field }) => {
-        useEffect(() => {
-          validateEmail(field.value);
-        }, [field.value, validateEmail]);
-
         const hasValue = field.value && field.value.trim() !== "";
         const error = control._formState.errors.email;
         const isFullyValid = emailStatus.status === "unique" && !error;
